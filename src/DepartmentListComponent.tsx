@@ -39,7 +39,7 @@ const DepartmentListComponent: React.FC<DepartmentListComponentProps> = ({
 
   const handleSubDepartmentToggle = (
     department: string,
-    subDepartment: string
+    _subDepartment: string
   ) => {
     const isAllSubDepartmentsSelected = departments
       .find((dep) => dep.department === department)
