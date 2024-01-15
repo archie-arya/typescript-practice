@@ -1,32 +1,39 @@
 // SecondPage.tsx
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DataGridComponent from './DataGridComponent';
+import DepartmentListComponent from './DepartmentListComponent';
+
+const departmentsData = [
+  {
+    department: 'customer_service',
+    sub_departments: ['support', 'customer_success'],
+  },
+  {
+    department: 'design',
+    sub_departments: ['graphic_design', 'product_design', 'web_design'],
+  },
+];
 
 const SecondPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    if (!userDetails.name || !userDetails.phoneNumber || !userDetails.email) {
+    // Check if user details are available in localStorage
+    const userDetails = localStorage.getItem('userDetails');
+    if (!userDetails) {
       // Redirect to the first page with a message
-      navigate('/first-page?message=Please enter your details');
+      navigate('/first-page?message=Please fill out the form');
     }
   }, [navigate]);
 
-  // Avoid rendering the actual details if there was an issue with the form
-  // This will also help if the user directly navigates to the /second-page URL
-  if (window.location.href.includes('/first-page')) {
-    return null;
-  }
-
-  const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h1>Second Page</h1>
-      <p>Name: {userDetails.name}</p>
-      <p>Phone Number: {userDetails.phoneNumber}</p>
-      <p>Email: {userDetails.email}</p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <DataGridComponent />
+        <DepartmentListComponent departments={departmentsData} />
+      </div>
     </div>
   );
 };
